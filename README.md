@@ -1,0 +1,5 @@
+generateAvro
+
+copyTask
+
+build

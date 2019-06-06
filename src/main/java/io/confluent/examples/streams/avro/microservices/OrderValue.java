@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro.microservices;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class OrderValue extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -6271918824826061294L;
@@ -26,7 +27,16 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
       new BinaryMessageDecoder<OrderValue>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<OrderValue> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<OrderValue> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<OrderValue> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<OrderValue>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this OrderValue to a ByteBuffer. */
+  /**
+   * Serializes this OrderValue to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a OrderValue from a ByteBuffer. */
+  /**
+   * Deserializes a OrderValue from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a OrderValue instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static OrderValue fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -71,6 +91,7 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
     this.value = value;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -99,6 +120,7 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
     return order;
   }
 
+
   /**
    * Sets the value of the 'order' field.
    * @param value the value to set.
@@ -111,15 +133,16 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
    * Gets the value of the 'value' field.
    * @return The value of the 'value' field.
    */
-  public java.lang.Double getValue() {
+  public double getValue() {
     return value;
   }
+
 
   /**
    * Sets the value of the 'value' field.
    * @param value the value to set.
    */
-  public void setValue(java.lang.Double value) {
+  public void setValue(double value) {
     this.value = value;
   }
 
@@ -137,7 +160,11 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
    * @return A new OrderValue RecordBuilder
    */
   public static io.confluent.examples.streams.avro.microservices.OrderValue.Builder newBuilder(io.confluent.examples.streams.avro.microservices.OrderValue.Builder other) {
-    return new io.confluent.examples.streams.avro.microservices.OrderValue.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.microservices.OrderValue.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.microservices.OrderValue.Builder(other);
+    }
   }
 
   /**
@@ -146,7 +173,11 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
    * @return A new OrderValue RecordBuilder
    */
   public static io.confluent.examples.streams.avro.microservices.OrderValue.Builder newBuilder(io.confluent.examples.streams.avro.microservices.OrderValue other) {
-    return new io.confluent.examples.streams.avro.microservices.OrderValue.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.microservices.OrderValue.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.microservices.OrderValue.Builder(other);
+    }
   }
 
   /**
@@ -172,14 +203,14 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
       super(other);
       if (isValidValue(fields()[0], other.order)) {
         this.order = data().deepCopy(fields()[0].schema(), other.order);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (other.hasOrderBuilder()) {
         this.orderBuilder = io.confluent.examples.streams.avro.microservices.Order.newBuilder(other.getOrderBuilder());
       }
       if (isValidValue(fields()[1], other.value)) {
         this.value = data().deepCopy(fields()[1].schema(), other.value);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
     }
 
@@ -188,7 +219,7 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.microservices.OrderValue other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.order)) {
         this.order = data().deepCopy(fields()[0].schema(), other.order);
         fieldSetFlags()[0] = true;
@@ -207,6 +238,7 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
     public io.confluent.examples.streams.avro.microservices.Order getOrder() {
       return order;
     }
+
 
     /**
       * Sets the value of the 'order' field.
@@ -278,9 +310,10 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
       * Gets the value of the 'value' field.
       * @return The value.
       */
-    public java.lang.Double getValue() {
+    public double getValue() {
       return value;
     }
+
 
     /**
       * Sets the value of the 'value' field.
@@ -318,12 +351,19 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
       try {
         OrderValue record = new OrderValue();
         if (orderBuilder != null) {
-          record.order = this.orderBuilder.build();
+          try {
+            record.order = this.orderBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("order"));
+            throw e;
+          }
         } else {
           record.order = fieldSetFlags()[0] ? this.order : (io.confluent.examples.streams.avro.microservices.Order) defaultValue(fields()[0]);
         }
         record.value = fieldSetFlags()[1] ? this.value : (java.lang.Double) defaultValue(fields()[1]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -348,4 +388,57 @@ public class OrderValue extends org.apache.avro.specific.SpecificRecordBase impl
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    this.order.customEncode(out);
+
+    out.writeDouble(this.value);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (this.order == null) {
+        this.order = new io.confluent.examples.streams.avro.microservices.Order();
+      }
+      this.order.customDecode(in);
+
+      this.value = in.readDouble();
+
+    } else {
+      for (int i = 0; i < 2; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (this.order == null) {
+            this.order = new io.confluent.examples.streams.avro.microservices.Order();
+          }
+          this.order.customDecode(in);
+          break;
+
+        case 1:
+          this.value = in.readDouble();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

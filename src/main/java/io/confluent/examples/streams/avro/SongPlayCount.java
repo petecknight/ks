@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -4452719225619238933L;
@@ -26,7 +27,16 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
       new BinaryMessageDecoder<SongPlayCount>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<SongPlayCount> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<SongPlayCount> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<SongPlayCount> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<SongPlayCount>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this SongPlayCount to a ByteBuffer. */
+  /**
+   * Serializes this SongPlayCount to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a SongPlayCount from a ByteBuffer. */
+  /**
+   * Deserializes a SongPlayCount from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a SongPlayCount instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static SongPlayCount fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -71,6 +91,7 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
     this.plays = plays;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -95,15 +116,16 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
    * Gets the value of the 'song_id' field.
    * @return The value of the 'song_id' field.
    */
-  public java.lang.Long getSongId() {
+  public long getSongId() {
     return song_id;
   }
+
 
   /**
    * Sets the value of the 'song_id' field.
    * @param value the value to set.
    */
-  public void setSongId(java.lang.Long value) {
+  public void setSongId(long value) {
     this.song_id = value;
   }
 
@@ -111,15 +133,16 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
    * Gets the value of the 'plays' field.
    * @return The value of the 'plays' field.
    */
-  public java.lang.Long getPlays() {
+  public long getPlays() {
     return plays;
   }
+
 
   /**
    * Sets the value of the 'plays' field.
    * @param value the value to set.
    */
-  public void setPlays(java.lang.Long value) {
+  public void setPlays(long value) {
     this.plays = value;
   }
 
@@ -137,7 +160,11 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
    * @return A new SongPlayCount RecordBuilder
    */
   public static io.confluent.examples.streams.avro.SongPlayCount.Builder newBuilder(io.confluent.examples.streams.avro.SongPlayCount.Builder other) {
-    return new io.confluent.examples.streams.avro.SongPlayCount.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.SongPlayCount.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.SongPlayCount.Builder(other);
+    }
   }
 
   /**
@@ -146,7 +173,11 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
    * @return A new SongPlayCount RecordBuilder
    */
   public static io.confluent.examples.streams.avro.SongPlayCount.Builder newBuilder(io.confluent.examples.streams.avro.SongPlayCount other) {
-    return new io.confluent.examples.streams.avro.SongPlayCount.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.SongPlayCount.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.SongPlayCount.Builder(other);
+    }
   }
 
   /**
@@ -171,11 +202,11 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
       super(other);
       if (isValidValue(fields()[0], other.song_id)) {
         this.song_id = data().deepCopy(fields()[0].schema(), other.song_id);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.plays)) {
         this.plays = data().deepCopy(fields()[1].schema(), other.plays);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
     }
 
@@ -184,7 +215,7 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.SongPlayCount other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.song_id)) {
         this.song_id = data().deepCopy(fields()[0].schema(), other.song_id);
         fieldSetFlags()[0] = true;
@@ -199,9 +230,10 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
       * Gets the value of the 'song_id' field.
       * @return The value.
       */
-    public java.lang.Long getSongId() {
+    public long getSongId() {
       return song_id;
     }
+
 
     /**
       * Sets the value of the 'song_id' field.
@@ -237,9 +269,10 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
       * Gets the value of the 'plays' field.
       * @return The value.
       */
-    public java.lang.Long getPlays() {
+    public long getPlays() {
       return plays;
     }
+
 
     /**
       * Sets the value of the 'plays' field.
@@ -279,6 +312,8 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
         record.song_id = fieldSetFlags()[0] ? this.song_id : (java.lang.Long) defaultValue(fields()[0]);
         record.plays = fieldSetFlags()[1] ? this.plays : (java.lang.Long) defaultValue(fields()[1]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -303,4 +338,51 @@ public class SongPlayCount extends org.apache.avro.specific.SpecificRecordBase i
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeLong(this.song_id);
+
+    out.writeLong(this.plays);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.song_id = in.readLong();
+
+      this.plays = in.readLong();
+
+    } else {
+      for (int i = 0; i < 2; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.song_id = in.readLong();
+          break;
+
+        case 1:
+          this.plays = in.readLong();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 3609653514788025L;
@@ -26,7 +27,16 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
       new BinaryMessageDecoder<PlayEvent>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<PlayEvent> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<PlayEvent> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<PlayEvent> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<PlayEvent>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this PlayEvent to a ByteBuffer. */
+  /**
+   * Serializes this PlayEvent to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a PlayEvent from a ByteBuffer. */
+  /**
+   * Deserializes a PlayEvent from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a PlayEvent instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static PlayEvent fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -71,6 +91,7 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
     this.duration = duration;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -95,15 +116,16 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'song_id' field.
    * @return The value of the 'song_id' field.
    */
-  public java.lang.Long getSongId() {
+  public long getSongId() {
     return song_id;
   }
+
 
   /**
    * Sets the value of the 'song_id' field.
    * @param value the value to set.
    */
-  public void setSongId(java.lang.Long value) {
+  public void setSongId(long value) {
     this.song_id = value;
   }
 
@@ -111,15 +133,16 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
    * Gets the value of the 'duration' field.
    * @return The value of the 'duration' field.
    */
-  public java.lang.Long getDuration() {
+  public long getDuration() {
     return duration;
   }
+
 
   /**
    * Sets the value of the 'duration' field.
    * @param value the value to set.
    */
-  public void setDuration(java.lang.Long value) {
+  public void setDuration(long value) {
     this.duration = value;
   }
 
@@ -137,7 +160,11 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
    * @return A new PlayEvent RecordBuilder
    */
   public static io.confluent.examples.streams.avro.PlayEvent.Builder newBuilder(io.confluent.examples.streams.avro.PlayEvent.Builder other) {
-    return new io.confluent.examples.streams.avro.PlayEvent.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.PlayEvent.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.PlayEvent.Builder(other);
+    }
   }
 
   /**
@@ -146,7 +173,11 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
    * @return A new PlayEvent RecordBuilder
    */
   public static io.confluent.examples.streams.avro.PlayEvent.Builder newBuilder(io.confluent.examples.streams.avro.PlayEvent other) {
-    return new io.confluent.examples.streams.avro.PlayEvent.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.PlayEvent.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.PlayEvent.Builder(other);
+    }
   }
 
   /**
@@ -171,11 +202,11 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
       super(other);
       if (isValidValue(fields()[0], other.song_id)) {
         this.song_id = data().deepCopy(fields()[0].schema(), other.song_id);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.duration)) {
         this.duration = data().deepCopy(fields()[1].schema(), other.duration);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
     }
 
@@ -184,7 +215,7 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.PlayEvent other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.song_id)) {
         this.song_id = data().deepCopy(fields()[0].schema(), other.song_id);
         fieldSetFlags()[0] = true;
@@ -199,9 +230,10 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * Gets the value of the 'song_id' field.
       * @return The value.
       */
-    public java.lang.Long getSongId() {
+    public long getSongId() {
       return song_id;
     }
+
 
     /**
       * Sets the value of the 'song_id' field.
@@ -237,9 +269,10 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
       * Gets the value of the 'duration' field.
       * @return The value.
       */
-    public java.lang.Long getDuration() {
+    public long getDuration() {
       return duration;
     }
+
 
     /**
       * Sets the value of the 'duration' field.
@@ -279,6 +312,8 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
         record.song_id = fieldSetFlags()[0] ? this.song_id : (java.lang.Long) defaultValue(fields()[0]);
         record.duration = fieldSetFlags()[1] ? this.duration : (java.lang.Long) defaultValue(fields()[1]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -303,4 +338,51 @@ public class PlayEvent extends org.apache.avro.specific.SpecificRecordBase imple
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeLong(this.song_id);
+
+    out.writeLong(this.duration);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.song_id = in.readLong();
+
+      this.duration = in.readLong();
+
+    } else {
+      for (int i = 0; i < 2; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.song_id = in.readLong();
+          break;
+
+        case 1:
+          this.duration = in.readLong();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

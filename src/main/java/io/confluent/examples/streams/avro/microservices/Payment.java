@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro.microservices;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Payment extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 4519705811009021921L;
@@ -26,7 +27,16 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
       new BinaryMessageDecoder<Payment>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<Payment> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<Payment> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<Payment> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<Payment>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this Payment to a ByteBuffer. */
+  /**
+   * Serializes this Payment to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a Payment from a ByteBuffer. */
+  /**
+   * Deserializes a Payment from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a Payment instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static Payment fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -77,6 +97,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
     this.amount = amount;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -109,6 +130,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
     return id;
   }
 
+
   /**
    * Sets the value of the 'id' field.
    * @param value the value to set.
@@ -124,6 +146,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
   public java.lang.String getOrderId() {
     return orderId;
   }
+
 
   /**
    * Sets the value of the 'orderId' field.
@@ -141,6 +164,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
     return ccy;
   }
 
+
   /**
    * Sets the value of the 'ccy' field.
    * @param value the value to set.
@@ -153,15 +177,16 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
    * Gets the value of the 'amount' field.
    * @return The value of the 'amount' field.
    */
-  public java.lang.Double getAmount() {
+  public double getAmount() {
     return amount;
   }
+
 
   /**
    * Sets the value of the 'amount' field.
    * @param value the value to set.
    */
-  public void setAmount(java.lang.Double value) {
+  public void setAmount(double value) {
     this.amount = value;
   }
 
@@ -179,7 +204,11 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
    * @return A new Payment RecordBuilder
    */
   public static io.confluent.examples.streams.avro.microservices.Payment.Builder newBuilder(io.confluent.examples.streams.avro.microservices.Payment.Builder other) {
-    return new io.confluent.examples.streams.avro.microservices.Payment.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.microservices.Payment.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.microservices.Payment.Builder(other);
+    }
   }
 
   /**
@@ -188,7 +217,11 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
    * @return A new Payment RecordBuilder
    */
   public static io.confluent.examples.streams.avro.microservices.Payment.Builder newBuilder(io.confluent.examples.streams.avro.microservices.Payment other) {
-    return new io.confluent.examples.streams.avro.microservices.Payment.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.microservices.Payment.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.microservices.Payment.Builder(other);
+    }
   }
 
   /**
@@ -215,19 +248,19 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
       super(other);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.orderId)) {
         this.orderId = data().deepCopy(fields()[1].schema(), other.orderId);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.ccy)) {
         this.ccy = data().deepCopy(fields()[2].schema(), other.ccy);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.amount)) {
         this.amount = data().deepCopy(fields()[3].schema(), other.amount);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
     }
 
@@ -236,7 +269,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.microservices.Payment other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = true;
@@ -262,6 +295,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
     public java.lang.String getId() {
       return id;
     }
+
 
     /**
       * Sets the value of the 'id' field.
@@ -302,6 +336,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
       return orderId;
     }
 
+
     /**
       * Sets the value of the 'orderId' field.
       * @param value The value of 'orderId'.
@@ -341,6 +376,7 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
       return ccy;
     }
 
+
     /**
       * Sets the value of the 'ccy' field.
       * @param value The value of 'ccy'.
@@ -376,9 +412,10 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
       * Gets the value of the 'amount' field.
       * @return The value.
       */
-    public java.lang.Double getAmount() {
+    public double getAmount() {
       return amount;
     }
+
 
     /**
       * Sets the value of the 'amount' field.
@@ -420,6 +457,8 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
         record.ccy = fieldSetFlags()[2] ? this.ccy : (java.lang.String) defaultValue(fields()[2]);
         record.amount = fieldSetFlags()[3] ? this.amount : (java.lang.Double) defaultValue(fields()[3]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -444,4 +483,67 @@ public class Payment extends org.apache.avro.specific.SpecificRecordBase impleme
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeString(this.id);
+
+    out.writeString(this.orderId);
+
+    out.writeString(this.ccy);
+
+    out.writeDouble(this.amount);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.id = in.readString();
+
+      this.orderId = in.readString();
+
+      this.ccy = in.readString();
+
+      this.amount = in.readDouble();
+
+    } else {
+      for (int i = 0; i < 4; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.id = in.readString();
+          break;
+
+        case 1:
+          this.orderId = in.readString();
+          break;
+
+        case 2:
+          this.ccy = in.readString();
+          break;
+
+        case 3:
+          this.amount = in.readDouble();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

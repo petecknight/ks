@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Song extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 9104070368042704268L;
@@ -26,7 +27,16 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
       new BinaryMessageDecoder<Song>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<Song> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<Song> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<Song> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<Song>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this Song to a ByteBuffer. */
+  /**
+   * Serializes this Song to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a Song from a ByteBuffer. */
+  /**
+   * Deserializes a Song from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a Song instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static Song fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -80,6 +100,7 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
     this.genre = genre;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -110,15 +131,16 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
    * Gets the value of the 'id' field.
    * @return The value of the 'id' field.
    */
-  public java.lang.Long getId() {
+  public long getId() {
     return id;
   }
+
 
   /**
    * Sets the value of the 'id' field.
    * @param value the value to set.
    */
-  public void setId(java.lang.Long value) {
+  public void setId(long value) {
     this.id = value;
   }
 
@@ -129,6 +151,7 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
   public java.lang.String getAlbum() {
     return album;
   }
+
 
   /**
    * Sets the value of the 'album' field.
@@ -146,6 +169,7 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
     return artist;
   }
 
+
   /**
    * Sets the value of the 'artist' field.
    * @param value the value to set.
@@ -162,6 +186,7 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
     return name;
   }
 
+
   /**
    * Sets the value of the 'name' field.
    * @param value the value to set.
@@ -177,6 +202,7 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
   public java.lang.String getGenre() {
     return genre;
   }
+
 
   /**
    * Sets the value of the 'genre' field.
@@ -200,7 +226,11 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
    * @return A new Song RecordBuilder
    */
   public static io.confluent.examples.streams.avro.Song.Builder newBuilder(io.confluent.examples.streams.avro.Song.Builder other) {
-    return new io.confluent.examples.streams.avro.Song.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.Song.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.Song.Builder(other);
+    }
   }
 
   /**
@@ -209,7 +239,11 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
    * @return A new Song RecordBuilder
    */
   public static io.confluent.examples.streams.avro.Song.Builder newBuilder(io.confluent.examples.streams.avro.Song other) {
-    return new io.confluent.examples.streams.avro.Song.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.Song.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.Song.Builder(other);
+    }
   }
 
   /**
@@ -237,23 +271,23 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
       super(other);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.album)) {
         this.album = data().deepCopy(fields()[1].schema(), other.album);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.artist)) {
         this.artist = data().deepCopy(fields()[2].schema(), other.artist);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.name)) {
         this.name = data().deepCopy(fields()[3].schema(), other.name);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.genre)) {
         this.genre = data().deepCopy(fields()[4].schema(), other.genre);
-        fieldSetFlags()[4] = true;
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
     }
 
@@ -262,7 +296,7 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.Song other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = true;
@@ -289,9 +323,10 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
       * Gets the value of the 'id' field.
       * @return The value.
       */
-    public java.lang.Long getId() {
+    public long getId() {
       return id;
     }
+
 
     /**
       * Sets the value of the 'id' field.
@@ -330,6 +365,7 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
     public java.lang.String getAlbum() {
       return album;
     }
+
 
     /**
       * Sets the value of the 'album' field.
@@ -370,6 +406,7 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
       return artist;
     }
 
+
     /**
       * Sets the value of the 'artist' field.
       * @param value The value of 'artist'.
@@ -409,6 +446,7 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
       return name;
     }
 
+
     /**
       * Sets the value of the 'name' field.
       * @param value The value of 'name'.
@@ -447,6 +485,7 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
     public java.lang.String getGenre() {
       return genre;
     }
+
 
     /**
       * Sets the value of the 'genre' field.
@@ -490,6 +529,8 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
         record.name = fieldSetFlags()[3] ? this.name : (java.lang.String) defaultValue(fields()[3]);
         record.genre = fieldSetFlags()[4] ? this.genre : (java.lang.String) defaultValue(fields()[4]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -514,4 +555,75 @@ public class Song extends org.apache.avro.specific.SpecificRecordBase implements
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeLong(this.id);
+
+    out.writeString(this.album);
+
+    out.writeString(this.artist);
+
+    out.writeString(this.name);
+
+    out.writeString(this.genre);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.id = in.readLong();
+
+      this.album = in.readString();
+
+      this.artist = in.readString();
+
+      this.name = in.readString();
+
+      this.genre = in.readString();
+
+    } else {
+      for (int i = 0; i < 5; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.id = in.readLong();
+          break;
+
+        case 1:
+          this.album = in.readString();
+          break;
+
+        case 2:
+          this.artist = in.readString();
+          break;
+
+        case 3:
+          this.name = in.readString();
+          break;
+
+        case 4:
+          this.genre = in.readString();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

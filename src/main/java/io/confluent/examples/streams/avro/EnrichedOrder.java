@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -901208525857000178L;
@@ -26,7 +27,16 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
       new BinaryMessageDecoder<EnrichedOrder>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<EnrichedOrder> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<EnrichedOrder> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<EnrichedOrder> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<EnrichedOrder>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this EnrichedOrder to a ByteBuffer. */
+  /**
+   * Serializes this EnrichedOrder to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a EnrichedOrder from a ByteBuffer. */
+  /**
+   * Deserializes a EnrichedOrder from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a EnrichedOrder instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static EnrichedOrder fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -74,6 +94,7 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
     this.order = order;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -104,6 +125,7 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
     return product;
   }
 
+
   /**
    * Sets the value of the 'product' field.
    * @param value the value to set.
@@ -120,6 +142,7 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
     return customer;
   }
 
+
   /**
    * Sets the value of the 'customer' field.
    * @param value the value to set.
@@ -135,6 +158,7 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
   public io.confluent.examples.streams.avro.Order getOrder() {
     return order;
   }
+
 
   /**
    * Sets the value of the 'order' field.
@@ -158,7 +182,11 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
    * @return A new EnrichedOrder RecordBuilder
    */
   public static io.confluent.examples.streams.avro.EnrichedOrder.Builder newBuilder(io.confluent.examples.streams.avro.EnrichedOrder.Builder other) {
-    return new io.confluent.examples.streams.avro.EnrichedOrder.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.EnrichedOrder.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.EnrichedOrder.Builder(other);
+    }
   }
 
   /**
@@ -167,7 +195,11 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
    * @return A new EnrichedOrder RecordBuilder
    */
   public static io.confluent.examples.streams.avro.EnrichedOrder.Builder newBuilder(io.confluent.examples.streams.avro.EnrichedOrder other) {
-    return new io.confluent.examples.streams.avro.EnrichedOrder.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.EnrichedOrder.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.EnrichedOrder.Builder(other);
+    }
   }
 
   /**
@@ -196,21 +228,21 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
       super(other);
       if (isValidValue(fields()[0], other.product)) {
         this.product = data().deepCopy(fields()[0].schema(), other.product);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (other.hasProductBuilder()) {
         this.productBuilder = io.confluent.examples.streams.avro.Product.newBuilder(other.getProductBuilder());
       }
       if (isValidValue(fields()[1], other.customer)) {
         this.customer = data().deepCopy(fields()[1].schema(), other.customer);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (other.hasCustomerBuilder()) {
         this.customerBuilder = io.confluent.examples.streams.avro.Customer.newBuilder(other.getCustomerBuilder());
       }
       if (isValidValue(fields()[2], other.order)) {
         this.order = data().deepCopy(fields()[2].schema(), other.order);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (other.hasOrderBuilder()) {
         this.orderBuilder = io.confluent.examples.streams.avro.Order.newBuilder(other.getOrderBuilder());
@@ -222,7 +254,7 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.EnrichedOrder other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.product)) {
         this.product = data().deepCopy(fields()[0].schema(), other.product);
         fieldSetFlags()[0] = true;
@@ -247,6 +279,7 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
     public io.confluent.examples.streams.avro.Product getProduct() {
       return product;
     }
+
 
     /**
       * Sets the value of the 'product' field.
@@ -322,6 +355,7 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
       return customer;
     }
 
+
     /**
       * Sets the value of the 'customer' field.
       * @param value The value of 'customer'.
@@ -396,6 +430,7 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
       return order;
     }
 
+
     /**
       * Sets the value of the 'order' field.
       * @param value The value of 'order'.
@@ -468,21 +503,38 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
       try {
         EnrichedOrder record = new EnrichedOrder();
         if (productBuilder != null) {
-          record.product = this.productBuilder.build();
+          try {
+            record.product = this.productBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("product"));
+            throw e;
+          }
         } else {
           record.product = fieldSetFlags()[0] ? this.product : (io.confluent.examples.streams.avro.Product) defaultValue(fields()[0]);
         }
         if (customerBuilder != null) {
-          record.customer = this.customerBuilder.build();
+          try {
+            record.customer = this.customerBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("customer"));
+            throw e;
+          }
         } else {
           record.customer = fieldSetFlags()[1] ? this.customer : (io.confluent.examples.streams.avro.Customer) defaultValue(fields()[1]);
         }
         if (orderBuilder != null) {
-          record.order = this.orderBuilder.build();
+          try {
+            record.order = this.orderBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("order"));
+            throw e;
+          }
         } else {
           record.order = fieldSetFlags()[2] ? this.order : (io.confluent.examples.streams.avro.Order) defaultValue(fields()[2]);
         }
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -507,4 +559,77 @@ public class EnrichedOrder extends org.apache.avro.specific.SpecificRecordBase i
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    this.product.customEncode(out);
+
+    this.customer.customEncode(out);
+
+    this.order.customEncode(out);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (this.product == null) {
+        this.product = new io.confluent.examples.streams.avro.Product();
+      }
+      this.product.customDecode(in);
+
+      if (this.customer == null) {
+        this.customer = new io.confluent.examples.streams.avro.Customer();
+      }
+      this.customer.customDecode(in);
+
+      if (this.order == null) {
+        this.order = new io.confluent.examples.streams.avro.Order();
+      }
+      this.order.customDecode(in);
+
+    } else {
+      for (int i = 0; i < 3; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (this.product == null) {
+            this.product = new io.confluent.examples.streams.avro.Product();
+          }
+          this.product.customDecode(in);
+          break;
+
+        case 1:
+          if (this.customer == null) {
+            this.customer = new io.confluent.examples.streams.avro.Customer();
+          }
+          this.customer.customDecode(in);
+          break;
+
+        case 2:
+          if (this.order == null) {
+            this.order = new io.confluent.examples.streams.avro.Order();
+          }
+          this.order.customDecode(in);
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

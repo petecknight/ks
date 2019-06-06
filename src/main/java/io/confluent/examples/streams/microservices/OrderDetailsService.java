@@ -171,9 +171,9 @@ public class OrderDetailsService implements Service {
   }
 
   private boolean isValid(final Order order) {
-    if (order.getCustomerId() == null) {
+    /*if (order.getCustomerId() == null) {
       return false;
-    }
+    }*/
     if (order.getQuantity() < 0) {
       return false;
     }

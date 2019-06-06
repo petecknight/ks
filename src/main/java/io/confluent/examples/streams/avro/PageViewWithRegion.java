@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -4589440717703753993L;
@@ -26,7 +27,16 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
       new BinaryMessageDecoder<PageViewWithRegion>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<PageViewWithRegion> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<PageViewWithRegion> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<PageViewWithRegion> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<PageViewWithRegion>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this PageViewWithRegion to a ByteBuffer. */
+  /**
+   * Serializes this PageViewWithRegion to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a PageViewWithRegion from a ByteBuffer. */
+  /**
+   * Deserializes a PageViewWithRegion from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a PageViewWithRegion instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static PageViewWithRegion fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -74,6 +94,7 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
     this.region = region;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -104,6 +125,7 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
     return user;
   }
 
+
   /**
    * Sets the value of the 'user' field.
    * @param value the value to set.
@@ -120,6 +142,7 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
     return page;
   }
 
+
   /**
    * Sets the value of the 'page' field.
    * @param value the value to set.
@@ -135,6 +158,7 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
   public java.lang.String getRegion() {
     return region;
   }
+
 
   /**
    * Sets the value of the 'region' field.
@@ -158,7 +182,11 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
    * @return A new PageViewWithRegion RecordBuilder
    */
   public static io.confluent.examples.streams.avro.PageViewWithRegion.Builder newBuilder(io.confluent.examples.streams.avro.PageViewWithRegion.Builder other) {
-    return new io.confluent.examples.streams.avro.PageViewWithRegion.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.PageViewWithRegion.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.PageViewWithRegion.Builder(other);
+    }
   }
 
   /**
@@ -167,7 +195,11 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
    * @return A new PageViewWithRegion RecordBuilder
    */
   public static io.confluent.examples.streams.avro.PageViewWithRegion.Builder newBuilder(io.confluent.examples.streams.avro.PageViewWithRegion other) {
-    return new io.confluent.examples.streams.avro.PageViewWithRegion.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.PageViewWithRegion.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.PageViewWithRegion.Builder(other);
+    }
   }
 
   /**
@@ -193,15 +225,15 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
       super(other);
       if (isValidValue(fields()[0], other.user)) {
         this.user = data().deepCopy(fields()[0].schema(), other.user);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.page)) {
         this.page = data().deepCopy(fields()[1].schema(), other.page);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.region)) {
         this.region = data().deepCopy(fields()[2].schema(), other.region);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
     }
 
@@ -210,7 +242,7 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.PageViewWithRegion other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.user)) {
         this.user = data().deepCopy(fields()[0].schema(), other.user);
         fieldSetFlags()[0] = true;
@@ -232,6 +264,7 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
     public java.lang.String getUser() {
       return user;
     }
+
 
     /**
       * Sets the value of the 'user' field.
@@ -272,6 +305,7 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
       return page;
     }
 
+
     /**
       * Sets the value of the 'page' field.
       * @param value The value of 'page'.
@@ -310,6 +344,7 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
     public java.lang.String getRegion() {
       return region;
     }
+
 
     /**
       * Sets the value of the 'region' field.
@@ -351,6 +386,8 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
         record.page = fieldSetFlags()[1] ? this.page : (java.lang.String) defaultValue(fields()[1]);
         record.region = fieldSetFlags()[2] ? this.region : (java.lang.String) defaultValue(fields()[2]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -375,4 +412,59 @@ public class PageViewWithRegion extends org.apache.avro.specific.SpecificRecordB
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeString(this.user);
+
+    out.writeString(this.page);
+
+    out.writeString(this.region);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.user = in.readString();
+
+      this.page = in.readString();
+
+      this.region = in.readString();
+
+    } else {
+      for (int i = 0; i < 3; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.user = in.readString();
+          break;
+
+        case 1:
+          this.page = in.readString();
+          break;
+
+        case 2:
+          this.region = in.readString();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

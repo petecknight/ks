@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class PageView extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 7390877723082333149L;
@@ -26,7 +27,16 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
       new BinaryMessageDecoder<PageView>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<PageView> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<PageView> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<PageView> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<PageView>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this PageView to a ByteBuffer. */
+  /**
+   * Serializes this PageView to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a PageView from a ByteBuffer. */
+  /**
+   * Deserializes a PageView from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a PageView instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static PageView fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -77,6 +97,7 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
     this.flags = flags;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -109,6 +130,7 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
     return user;
   }
 
+
   /**
    * Sets the value of the 'user' field.
    * @param value the value to set.
@@ -124,6 +146,7 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.String getPage() {
     return page;
   }
+
 
   /**
    * Sets the value of the 'page' field.
@@ -141,6 +164,7 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
     return industry;
   }
 
+
   /**
    * Sets the value of the 'industry' field.
    * @param value the value to set.
@@ -156,6 +180,7 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.String getFlags() {
     return flags;
   }
+
 
   /**
    * Sets the value of the 'flags' field.
@@ -179,7 +204,11 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
    * @return A new PageView RecordBuilder
    */
   public static io.confluent.examples.streams.avro.PageView.Builder newBuilder(io.confluent.examples.streams.avro.PageView.Builder other) {
-    return new io.confluent.examples.streams.avro.PageView.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.PageView.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.PageView.Builder(other);
+    }
   }
 
   /**
@@ -188,7 +217,11 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
    * @return A new PageView RecordBuilder
    */
   public static io.confluent.examples.streams.avro.PageView.Builder newBuilder(io.confluent.examples.streams.avro.PageView other) {
-    return new io.confluent.examples.streams.avro.PageView.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.PageView.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.PageView.Builder(other);
+    }
   }
 
   /**
@@ -215,19 +248,19 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
       super(other);
       if (isValidValue(fields()[0], other.user)) {
         this.user = data().deepCopy(fields()[0].schema(), other.user);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.page)) {
         this.page = data().deepCopy(fields()[1].schema(), other.page);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.industry)) {
         this.industry = data().deepCopy(fields()[2].schema(), other.industry);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.flags)) {
         this.flags = data().deepCopy(fields()[3].schema(), other.flags);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
     }
 
@@ -236,7 +269,7 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.PageView other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.user)) {
         this.user = data().deepCopy(fields()[0].schema(), other.user);
         fieldSetFlags()[0] = true;
@@ -262,6 +295,7 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
     public java.lang.String getUser() {
       return user;
     }
+
 
     /**
       * Sets the value of the 'user' field.
@@ -302,6 +336,7 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
       return page;
     }
 
+
     /**
       * Sets the value of the 'page' field.
       * @param value The value of 'page'.
@@ -341,6 +376,7 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
       return industry;
     }
 
+
     /**
       * Sets the value of the 'industry' field.
       * @param value The value of 'industry'.
@@ -379,6 +415,7 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
     public java.lang.String getFlags() {
       return flags;
     }
+
 
     /**
       * Sets the value of the 'flags' field.
@@ -421,6 +458,8 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
         record.industry = fieldSetFlags()[2] ? this.industry : (java.lang.String) defaultValue(fields()[2]);
         record.flags = fieldSetFlags()[3] ? this.flags : (java.lang.String) defaultValue(fields()[3]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -445,4 +484,83 @@ public class PageView extends org.apache.avro.specific.SpecificRecordBase implem
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeString(this.user);
+
+    out.writeString(this.page);
+
+    out.writeString(this.industry);
+
+    if (this.flags == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.flags);
+    }
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.user = in.readString();
+
+      this.page = in.readString();
+
+      this.industry = in.readString();
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.flags = null;
+      } else {
+        this.flags = in.readString();
+      }
+
+    } else {
+      for (int i = 0; i < 4; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.user = in.readString();
+          break;
+
+        case 1:
+          this.page = in.readString();
+          break;
+
+        case 2:
+          this.industry = in.readString();
+          break;
+
+        case 3:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.flags = null;
+          } else {
+            this.flags = in.readString();
+          }
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

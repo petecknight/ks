@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro.microservices;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Customer extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 5899904090765765952L;
@@ -26,7 +27,16 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
       new BinaryMessageDecoder<Customer>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<Customer> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<Customer> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<Customer> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<Customer>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this Customer to a ByteBuffer. */
+  /**
+   * Serializes this Customer to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a Customer from a ByteBuffer. */
+  /**
+   * Deserializes a Customer from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a Customer instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static Customer fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -83,6 +103,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
     this.level = level;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -115,15 +136,16 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
    * Gets the value of the 'id' field.
    * @return The value of the 'id' field.
    */
-  public java.lang.Long getId() {
+  public long getId() {
     return id;
   }
+
 
   /**
    * Sets the value of the 'id' field.
    * @param value the value to set.
    */
-  public void setId(java.lang.Long value) {
+  public void setId(long value) {
     this.id = value;
   }
 
@@ -134,6 +156,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.String getFirstName() {
     return firstName;
   }
+
 
   /**
    * Sets the value of the 'firstName' field.
@@ -151,6 +174,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
     return lastName;
   }
 
+
   /**
    * Sets the value of the 'lastName' field.
    * @param value the value to set.
@@ -166,6 +190,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.String getEmail() {
     return email;
   }
+
 
   /**
    * Sets the value of the 'email' field.
@@ -183,6 +208,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
     return address;
   }
 
+
   /**
    * Sets the value of the 'address' field.
    * @param value the value to set.
@@ -198,6 +224,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.String getLevel() {
     return level;
   }
+
 
   /**
    * Sets the value of the 'level' field.
@@ -221,7 +248,11 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
    * @return A new Customer RecordBuilder
    */
   public static io.confluent.examples.streams.avro.microservices.Customer.Builder newBuilder(io.confluent.examples.streams.avro.microservices.Customer.Builder other) {
-    return new io.confluent.examples.streams.avro.microservices.Customer.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.microservices.Customer.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.microservices.Customer.Builder(other);
+    }
   }
 
   /**
@@ -230,7 +261,11 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
    * @return A new Customer RecordBuilder
    */
   public static io.confluent.examples.streams.avro.microservices.Customer.Builder newBuilder(io.confluent.examples.streams.avro.microservices.Customer other) {
-    return new io.confluent.examples.streams.avro.microservices.Customer.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.microservices.Customer.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.microservices.Customer.Builder(other);
+    }
   }
 
   /**
@@ -259,27 +294,27 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
       super(other);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.firstName)) {
         this.firstName = data().deepCopy(fields()[1].schema(), other.firstName);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.lastName)) {
         this.lastName = data().deepCopy(fields()[2].schema(), other.lastName);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.email)) {
         this.email = data().deepCopy(fields()[3].schema(), other.email);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.address)) {
         this.address = data().deepCopy(fields()[4].schema(), other.address);
-        fieldSetFlags()[4] = true;
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
       if (isValidValue(fields()[5], other.level)) {
         this.level = data().deepCopy(fields()[5].schema(), other.level);
-        fieldSetFlags()[5] = true;
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
     }
 
@@ -288,7 +323,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.microservices.Customer other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = true;
@@ -319,9 +354,10 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
       * Gets the value of the 'id' field.
       * @return The value.
       */
-    public java.lang.Long getId() {
+    public long getId() {
       return id;
     }
+
 
     /**
       * Sets the value of the 'id' field.
@@ -360,6 +396,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
     public java.lang.String getFirstName() {
       return firstName;
     }
+
 
     /**
       * Sets the value of the 'firstName' field.
@@ -400,6 +437,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
       return lastName;
     }
 
+
     /**
       * Sets the value of the 'lastName' field.
       * @param value The value of 'lastName'.
@@ -438,6 +476,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
     public java.lang.String getEmail() {
       return email;
     }
+
 
     /**
       * Sets the value of the 'email' field.
@@ -478,6 +517,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
       return address;
     }
 
+
     /**
       * Sets the value of the 'address' field.
       * @param value The value of 'address'.
@@ -516,6 +556,7 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
     public java.lang.String getLevel() {
       return level;
     }
+
 
     /**
       * Sets the value of the 'level' field.
@@ -560,6 +601,8 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
         record.address = fieldSetFlags()[4] ? this.address : (java.lang.String) defaultValue(fields()[4]);
         record.level = fieldSetFlags()[5] ? this.level : (java.lang.String) defaultValue(fields()[5]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -584,4 +627,83 @@ public class Customer extends org.apache.avro.specific.SpecificRecordBase implem
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeLong(this.id);
+
+    out.writeString(this.firstName);
+
+    out.writeString(this.lastName);
+
+    out.writeString(this.email);
+
+    out.writeString(this.address);
+
+    out.writeString(this.level);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.id = in.readLong();
+
+      this.firstName = in.readString();
+
+      this.lastName = in.readString();
+
+      this.email = in.readString();
+
+      this.address = in.readString();
+
+      this.level = in.readString();
+
+    } else {
+      for (int i = 0; i < 6; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.id = in.readLong();
+          break;
+
+        case 1:
+          this.firstName = in.readString();
+          break;
+
+        case 2:
+          this.lastName = in.readString();
+          break;
+
+        case 3:
+          this.email = in.readString();
+          break;
+
+        case 4:
+          this.address = in.readString();
+          break;
+
+        case 5:
+          this.level = in.readString();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

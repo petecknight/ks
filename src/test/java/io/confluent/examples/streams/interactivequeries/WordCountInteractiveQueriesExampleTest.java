@@ -30,6 +30,7 @@ import org.hamcrest.core.IsInstanceOf;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -123,6 +124,7 @@ public class WordCountInteractiveQueriesExampleTest {
       proxy.stop();
     }
   }
+  @Ignore
   @Test
   public void shouldDemonstrateInteractiveQueries() throws Exception {
     final String host = ExampleTestUtils.randomValidHost();

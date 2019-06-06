@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Order extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -3998666663382879581L;
@@ -26,7 +27,16 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       new BinaryMessageDecoder<Order>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<Order> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<Order> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<Order> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<Order>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this Order to a ByteBuffer. */
+  /**
+   * Serializes this Order to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a Order from a ByteBuffer. */
+  /**
+   * Deserializes a Order from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a Order instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static Order fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -74,6 +94,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     this.time_order_placed_at = time_order_placed_at;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -100,15 +121,16 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * Gets the value of the 'customer_id' field.
    * @return The value of the 'customer_id' field.
    */
-  public java.lang.Long getCustomerId() {
+  public long getCustomerId() {
     return customer_id;
   }
+
 
   /**
    * Sets the value of the 'customer_id' field.
    * @param value the value to set.
    */
-  public void setCustomerId(java.lang.Long value) {
+  public void setCustomerId(long value) {
     this.customer_id = value;
   }
 
@@ -116,15 +138,16 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * Gets the value of the 'product_id' field.
    * @return The value of the 'product_id' field.
    */
-  public java.lang.Long getProductId() {
+  public long getProductId() {
     return product_id;
   }
+
 
   /**
    * Sets the value of the 'product_id' field.
    * @param value the value to set.
    */
-  public void setProductId(java.lang.Long value) {
+  public void setProductId(long value) {
     this.product_id = value;
   }
 
@@ -132,15 +155,16 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * Gets the value of the 'time_order_placed_at' field.
    * @return The value of the 'time_order_placed_at' field.
    */
-  public java.lang.Long getTimeOrderPlacedAt() {
+  public long getTimeOrderPlacedAt() {
     return time_order_placed_at;
   }
+
 
   /**
    * Sets the value of the 'time_order_placed_at' field.
    * @param value the value to set.
    */
-  public void setTimeOrderPlacedAt(java.lang.Long value) {
+  public void setTimeOrderPlacedAt(long value) {
     this.time_order_placed_at = value;
   }
 
@@ -158,7 +182,11 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * @return A new Order RecordBuilder
    */
   public static io.confluent.examples.streams.avro.Order.Builder newBuilder(io.confluent.examples.streams.avro.Order.Builder other) {
-    return new io.confluent.examples.streams.avro.Order.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.Order.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.Order.Builder(other);
+    }
   }
 
   /**
@@ -167,7 +195,11 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
    * @return A new Order RecordBuilder
    */
   public static io.confluent.examples.streams.avro.Order.Builder newBuilder(io.confluent.examples.streams.avro.Order other) {
-    return new io.confluent.examples.streams.avro.Order.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.Order.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.Order.Builder(other);
+    }
   }
 
   /**
@@ -193,15 +225,15 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       super(other);
       if (isValidValue(fields()[0], other.customer_id)) {
         this.customer_id = data().deepCopy(fields()[0].schema(), other.customer_id);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.product_id)) {
         this.product_id = data().deepCopy(fields()[1].schema(), other.product_id);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.time_order_placed_at)) {
         this.time_order_placed_at = data().deepCopy(fields()[2].schema(), other.time_order_placed_at);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
     }
 
@@ -210,7 +242,7 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.Order other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.customer_id)) {
         this.customer_id = data().deepCopy(fields()[0].schema(), other.customer_id);
         fieldSetFlags()[0] = true;
@@ -229,9 +261,10 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       * Gets the value of the 'customer_id' field.
       * @return The value.
       */
-    public java.lang.Long getCustomerId() {
+    public long getCustomerId() {
       return customer_id;
     }
+
 
     /**
       * Sets the value of the 'customer_id' field.
@@ -267,9 +300,10 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       * Gets the value of the 'product_id' field.
       * @return The value.
       */
-    public java.lang.Long getProductId() {
+    public long getProductId() {
       return product_id;
     }
+
 
     /**
       * Sets the value of the 'product_id' field.
@@ -305,9 +339,10 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
       * Gets the value of the 'time_order_placed_at' field.
       * @return The value.
       */
-    public java.lang.Long getTimeOrderPlacedAt() {
+    public long getTimeOrderPlacedAt() {
       return time_order_placed_at;
     }
+
 
     /**
       * Sets the value of the 'time_order_placed_at' field.
@@ -348,6 +383,8 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
         record.product_id = fieldSetFlags()[1] ? this.product_id : (java.lang.Long) defaultValue(fields()[1]);
         record.time_order_placed_at = fieldSetFlags()[2] ? this.time_order_placed_at : (java.lang.Long) defaultValue(fields()[2]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -372,4 +409,59 @@ public class Order extends org.apache.avro.specific.SpecificRecordBase implement
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeLong(this.customer_id);
+
+    out.writeLong(this.product_id);
+
+    out.writeLong(this.time_order_placed_at);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.customer_id = in.readLong();
+
+      this.product_id = in.readLong();
+
+      this.time_order_placed_at = in.readLong();
+
+    } else {
+      for (int i = 0; i < 3; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.customer_id = in.readLong();
+          break;
+
+        case 1:
+          this.product_id = in.readLong();
+          break;
+
+        case 2:
+          this.time_order_placed_at = in.readLong();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+

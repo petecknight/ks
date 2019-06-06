@@ -5,12 +5,13 @@
  */
 package io.confluent.examples.streams.avro;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class UserProfile extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 1023001266323107863L;
@@ -26,7 +27,16 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
       new BinaryMessageDecoder<UserProfile>(MODEL$, SCHEMA$);
 
   /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<UserProfile> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
    * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
    */
   public static BinaryMessageDecoder<UserProfile> getDecoder() {
     return DECODER;
@@ -35,17 +45,27 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
   /**
    * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
   public static BinaryMessageDecoder<UserProfile> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<UserProfile>(MODEL$, SCHEMA$, resolver);
   }
 
-  /** Serializes this UserProfile to a ByteBuffer. */
+  /**
+   * Serializes this UserProfile to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
   public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
     return ENCODER.encode(this);
   }
 
-  /** Deserializes a UserProfile from a ByteBuffer. */
+  /**
+   * Deserializes a UserProfile from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a UserProfile instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
   public static UserProfile fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
@@ -71,6 +91,7 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
     this.region = region;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -99,6 +120,7 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
     return experience;
   }
 
+
   /**
    * Sets the value of the 'experience' field.
    * @param value the value to set.
@@ -114,6 +136,7 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
   public java.lang.String getRegion() {
     return region;
   }
+
 
   /**
    * Sets the value of the 'region' field.
@@ -137,7 +160,11 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
    * @return A new UserProfile RecordBuilder
    */
   public static io.confluent.examples.streams.avro.UserProfile.Builder newBuilder(io.confluent.examples.streams.avro.UserProfile.Builder other) {
-    return new io.confluent.examples.streams.avro.UserProfile.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.UserProfile.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.UserProfile.Builder(other);
+    }
   }
 
   /**
@@ -146,7 +173,11 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
    * @return A new UserProfile RecordBuilder
    */
   public static io.confluent.examples.streams.avro.UserProfile.Builder newBuilder(io.confluent.examples.streams.avro.UserProfile other) {
-    return new io.confluent.examples.streams.avro.UserProfile.Builder(other);
+    if (other == null) {
+      return new io.confluent.examples.streams.avro.UserProfile.Builder();
+    } else {
+      return new io.confluent.examples.streams.avro.UserProfile.Builder(other);
+    }
   }
 
   /**
@@ -171,11 +202,11 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
       super(other);
       if (isValidValue(fields()[0], other.experience)) {
         this.experience = data().deepCopy(fields()[0].schema(), other.experience);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.region)) {
         this.region = data().deepCopy(fields()[1].schema(), other.region);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
     }
 
@@ -184,7 +215,7 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
      * @param other The existing instance to copy.
      */
     private Builder(io.confluent.examples.streams.avro.UserProfile other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.experience)) {
         this.experience = data().deepCopy(fields()[0].schema(), other.experience);
         fieldSetFlags()[0] = true;
@@ -202,6 +233,7 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
     public java.lang.String getExperience() {
       return experience;
     }
+
 
     /**
       * Sets the value of the 'experience' field.
@@ -242,6 +274,7 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
       return region;
     }
 
+
     /**
       * Sets the value of the 'region' field.
       * @param value The value of 'region'.
@@ -281,6 +314,8 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
         record.experience = fieldSetFlags()[0] ? this.experience : (java.lang.String) defaultValue(fields()[0]);
         record.region = fieldSetFlags()[1] ? this.region : (java.lang.String) defaultValue(fields()[1]);
         return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
@@ -305,4 +340,67 @@ public class UserProfile extends org.apache.avro.specific.SpecificRecordBase imp
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    if (this.experience == null) {
+      out.writeIndex(1);
+      out.writeNull();
+    } else {
+      out.writeIndex(0);
+      out.writeString(this.experience);
+    }
+
+    out.writeString(this.region);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (in.readIndex() != 0) {
+        in.readNull();
+        this.experience = null;
+      } else {
+        this.experience = in.readString();
+      }
+
+      this.region = in.readString();
+
+    } else {
+      for (int i = 0; i < 2; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (in.readIndex() != 0) {
+            in.readNull();
+            this.experience = null;
+          } else {
+            this.experience = in.readString();
+          }
+          break;
+
+        case 1:
+          this.region = in.readString();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+
