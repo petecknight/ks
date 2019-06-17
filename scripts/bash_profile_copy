@@ -1,0 +1,143 @@
+\source <(kubectl completion bash)
+
+if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+    . /usr/local/share/bash-completion/bash_completion
+fi
+
+alias login="/Users/pkn04/.osprey/osprey user login"
+
+export PATH="/usr/local/opt/node@8/bin:$PATH"
+
+# set dev context to specific csp-td-xxx namespaces
+alias td-int="kubectl config set-context dev --namespace=csp-td-int; kubectl config view | grep csp-td-int; kubectl config use-context dev"
+
+alias td-func="kubectl config set-context dev --namespace=csp-td-stubbed-functional; kubectl config view | grep csp-td-stubbed-functional; kubectl config use-context dev"
+
+alias td-nonfunc="kubectl config set-context dev --namespace=csp-td-stubbed-nft; kubectl config view | grep csp-td-stubbed-nft; kubectl config use-context dev"
+
+alias slave="kubectl config set-context tools --namespace=tide-jenkins-slaves; kubectl config view | grep tide-jenkins-slaves; kubectl config use-context tools"
+
+alias local="kubectl config set-context docker-for-desktop --namespace=tds-stubbed-nft; kubectl config view | grep docker-for-desktop; kubectl config use-context docker-for-desktop"
+
+alias sent-int="kubectl config set-context dev --namespace=tds-int; kubectl config view | grep tds-int; kubectl config use-context dev"
+
+alias sent-show="kubectl config set-context dev --namespace=tds-stubbed-showcase; kubectl config view | grep tds-stubbed-showcase; kubectl config use-context dev"
+
+# get the local k8s admin user login token for the dashboard (make sure you have created a user admin-user)
+alias token="kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')"
+
+# create and launch the local k8s dashboard
+alias dashboard="kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml; kubectl proxy &"
+
+alias printExec="ls -l|awk ''/-x./' && !'/drw/' {print}'"
+
+alias ll="ls -ltr"
+
+setns() 
+{
+   echo -n "Change context from: $(kubectl config view --minify --output 'jsonpath={.contexts[0].name}') (y/n)? "
+   old_stty_cfg=$(stty -g)
+   stty raw -echo
+   answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
+   stty $old_stty_cfg
+
+   if echo "$answer" | grep -iq "^n" ;then
+       echo
+       echo using $(kubectl config view --minify --output 'jsonpath={.contexts[0].name}');
+   else
+       echo
+       echo -n "Enter context to switch to: "
+       read context
+       echo
+       echo switching to $context
+       kubectl config use-context $context;
+   fi
+   
+   echo -n "Change namespace from: $(kubectl config view --minify --output 'jsonpath={.contexts[0].context.namespace}') (y/n)? "
+   old_stty_cfg=$(stty -g)
+   stty raw -echo
+   answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
+   stty $old_stty_cfg
+
+   if echo "$answer" | grep -iq "^n" ;then
+       
+       echo;
+
+       ns=`kubectl get namespace $(kubectl config view --minify --output 'jsonpath={.contexts[0].context.namespace}') --no-headers --output=go-template={{.metadata.name}} 2>/dev/null`
+
+       if [ -z "${ns}" ]; then
+
+            if [ "docker-for-desktop" == $(kubectl config view --minify --output 'jsonpath={.contexts[0].name}') ]; then
+
+                 namespace=$(kubectl config view --minify --output 'jsonpath={.contexts[0].context.namespace}')
+
+                 echo -n "Namespace $namespace not found in context: $(kubectl config view --minify --output 'jsonpath={.contexts[0].name}') - create it (local only) (y/n)? "
+                 old_stty_cfg=$(stty -g)
+                 stty raw -echo
+                 answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
+                 stty $old_stty_cfg
+
+                 if echo "$answer" | grep -iq "^y" ;then
+                     echo;
+                     kubectl create namespace $namespace;
+                     ns=$namespace;
+                 else
+                     echo "Declined to create namespace - using default"
+                     ns="default"
+                 fi
+
+             else
+                 echo "Namespace $namespace not found in context: $(kubectl config view --minify --output 'jsonpath={.contexts[0].name}') - using default"
+                 ns="default"
+             fi
+
+            kubectl config set-context $(kubectl config current-context) --namespace=$ns;
+
+        fi
+
+   else
+
+       echo
+       echo -n "Enter namespace to switch to: "
+       read namespace
+       echo
+
+       ns=`kubectl get namespace $namespace --no-headers --output=go-template={{.metadata.name}} 2>/dev/null`
+
+       if [ -z "${ns}" ]; then
+
+            if [ "docker-for-desktop" == $(kubectl config view --minify --output 'jsonpath={.contexts[0].name}') ]; then
+
+                 echo -n "Namespace $namespace not found in context: $(kubectl config view --minify --output 'jsonpath={.contexts[0].name}') - create it (local only) (y/n)? "
+                 old_stty_cfg=$(stty -g)
+                 stty raw -echo
+                 answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
+                 stty $old_stty_cfg
+
+                 if echo "$answer" | grep -iq "^y" ;then                
+                     echo;
+                     kubectl create namespace $namespace;
+		     ns=$namespace;
+                 else
+                     echo "Declined to create namespace - using default"
+                     ns="default"
+                 fi                  
+            else
+	         echo "Namespace $namespace not found in context: $(kubectl config view --minify --output 'jsonpath={.contexts[0].name}') - using default"
+                 ns="default"
+            fi
+       fi
+
+       kubectl config set-context $(kubectl config current-context) --namespace=$ns;
+       
+   fi
+
+   echo;
+   echo "Current context | namespace:";
+   echo "----------------------------";
+   kubectl config view --minify --output 'jsonpath={.contexts[0].name} | {.contexts[0].context.namespace}';
+   echo;
+   echo "----------------------------";
+   echo;
+  
+}
