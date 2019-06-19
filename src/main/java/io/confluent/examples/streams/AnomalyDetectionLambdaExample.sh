@@ -1,11 +1,4 @@
-#!/bin/bash
-
-docker rm -f $(docker ps -aq)
-
-docker-compose up -d
-
-sleep 20
-
+#!/usr/bin/env bash
 
 docker exec broker bash -c 'cd /etc/kafka; kafka-topics --zookeeper zookeeper:2181 --create --topic UserClicks --partitions 1 --replication-factor 1'
 

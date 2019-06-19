@@ -1,12 +1,12 @@
+#Prepare
+
+If changes have been made to the schema, regenerate Avro
 * generateAvro
 
 * copyTask
 
 * build
 
-`kafka-console-consumer --topic AnomalousUsers --from-beginning \
---bootstrap-server localhost:9092 \
---property print.key=true \
---property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer`
+#Examples 
 
-`kafka-console-producer --broker-list localhost:9092 --topic UserClicks`
+See each individual class named md file explaining how to run.
