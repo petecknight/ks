@@ -53,13 +53,13 @@ List testing = ["junit:junit:4.12"
                 , "io.confluent:kafka-schema-registry:${confluentVersion}"
                 , "io.confluent:kafka-schema-registry:${confluentVersion}:tests"
                 , "org.apache.kafka:kafka_${kafkaScalaVersion}:${kafkaVersion}"
-                , "org.apache.kafka:kafka_${kafkaScalaVersion}:${kafkaVersion}:test"
-        ]
+                , "org.apache.kafka:kafka_${kafkaScalaVersion}:${kafkaVersion}:test"]
 
 dependencies {
     compile kafka, avro, web
     compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
     compile "org.mockito:mockito-core:2.7.14"
+    compile "org.slf4j:slf4j-simple:1.7.26"
     testCompile testing
 }
 
