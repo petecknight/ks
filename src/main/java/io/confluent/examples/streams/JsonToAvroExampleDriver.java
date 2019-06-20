@@ -57,7 +57,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 public class JsonToAvroExampleDriver {
 
   public static void main(final String[] args) throws IOException {
-    final String bootstrapServers = args.length > 0 ? args[0] : "localhost:9092";
+    final String bootstrapServers = args.length > 0 ? args[0] : "localhost:29092";
     final String schemaRegistryUrl = args.length > 1 ? args[1] : "http://localhost:8081";
     produceJsonInputs(bootstrapServers, schemaRegistryUrl);
     consumeAvroOutput(bootstrapServers, schemaRegistryUrl);
