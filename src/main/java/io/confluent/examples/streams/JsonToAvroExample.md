@@ -11,4 +11,5 @@ Execute script to add the required topics
 
 `JsonToAvroExample.sh`
 
-This converts JSON input data to Avro format - use the JsonToAvroExampleDriver to produce and consume the data
+This converts JSON input data to Avro format - 
+use the JsonToAvroExampleDriver to produce and consume the data

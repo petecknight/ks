@@ -1,5 +1,16 @@
 **MapFunctionlambdaExample**
 
+Go to root of project and bring up Kafka by running docker-compose up:
+
+```
+  docker rm -f $(docker ps -aq)
+  docker-compose up -d
+ ```
+
+Execute script to add the required topics
+
+`MapFunctionlambdaExample.sh`
+
 This example shows when you need to explicitly define serdes and when they are implied
 
 Produce some lowercase text to the input topic 
