@@ -150,12 +150,9 @@ public class PageViewRegionExample {
 
     // Create a keyed stream of page view events from the PageViews stream,
     // by extracting the user id (String) from the Avro value
-    final KStream<String, GenericRecord> viewsByUser = views.map(new KeyValueMapper<String, GenericRecord, KeyValue<String, GenericRecord>>() {
-      @Override
-      public KeyValue<String, GenericRecord> apply(final String dummy, final GenericRecord record) {
-        return new KeyValue<>(record.get("user").toString(), record);
-      }
-    });
+    final KStream<String, GenericRecord> viewsByUser = views.map(
+            (KeyValueMapper<String, GenericRecord, KeyValue<String, GenericRecord>>) (dummy, record)
+                    -> new KeyValue<>(record.get("user").toString(), record));
 
     // Create a changelog stream for user profiles from the UserProfiles topic,
     // where the key of a record is assumed to be the user id (String) and its value
