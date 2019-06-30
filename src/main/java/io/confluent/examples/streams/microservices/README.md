@@ -13,9 +13,12 @@ This is picked up by different validation engines (Fraud Service, Inventory Serv
 The result of each validation is pushed through a separate topic, Order Validations, so that we retain the _single writer_ status of the Orders Service —> Orders Topic.
 The results of the various validation checks are aggregated in the Validation Aggregator Service, which then moves the order to a Validated or Failed state, based on the combined result.
 
-To allow users to GET any order, the Orders Service creates a queryable materialized view (embedded inside the Orders Service), using a state store in each instance of the service, so that any Order can be requested historically. Note also that the Orders Service can be scaled out over a number of nodes, in which case GET requests must be routed to the correct node to get a certain key. This is handled automatically using the interactive queries functionality in Kafka Streams.
+To allow users to GET any order, the Orders Service creates a queryable materialized view (embedded inside the Orders Service), using a state store in each instance of the service, so that any Order can be requested
+historically. Note also that the Orders Service can be scaled out over a number of nodes, in which case GET requests must be routed to the correct node to get a certain key. This is
+handled automatically using the interactive queries functionality in Kafka Streams.
 
-The Orders Service also includes a blocking HTTP GET so that clients can read their own writes. In this way, we bridge the synchronous, blocking paradigm of a RESTful interface with the asynchronous, non-blocking processing performed server-side.
+The Orders Service also includes a blocking HTTP GET so that clients can read their own writes. In this way, we bridge the synchronous, blocking paradigm of a RESTful interface with the
+asynchronous, non-blocking processing performed server-side.
 
 There is a simple service that sends emails and does dynamic routing.
 
@@ -46,3 +49,5 @@ The best place to start is [EndToEndTest.java](https://github.com/confluentinc/k
 - Test framework needs to implement multiple Kafka instances to ensure accuracy in partitioned mode. 
 - The implementation of the Order Details Service using a producer and consumer. This is useful for demo purposes, but would be better implemented as a streams job (less code!). 
 - Demo embedded KSQL around the input of Inventory (which can be done without Avro support)
+
+https://docs.confluent.io/current/tutorials/examples/microservices-orders/docs/index.html#tutorial-microservices-orders
