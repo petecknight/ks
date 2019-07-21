@@ -26,11 +26,13 @@ public class AddInventory {
                                       final String bootstrapServers) {
 
         final Properties producerConfig = new Properties();
+
         producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         producerConfig.put(ProducerConfig.ACKS_CONFIG, "all");
         producerConfig.put(ProducerConfig.RETRIES_CONFIG, 0);
         producerConfig.put(ProducerConfig.CLIENT_ID_CONFIG, "inventory-generator");
         MonitoringInterceptorUtils.maybeConfigureInterceptorsProducer(producerConfig);
+
         final ProductTypeSerde productSerde = new ProductTypeSerde();
 
         try (final KafkaProducer<Product, Integer> stockProducer = new KafkaProducer<>(
@@ -57,6 +59,7 @@ public class AddInventory {
             new KeyValue<>(UNDERPANTS, quantityUnderpants),
             new KeyValue<>(JUMPERS, quantityJumpers)
         );
+
         System.out.printf("Send inventory to %s%n", Topics.WAREHOUSE_INVENTORY);
         sendInventory(inventory, Topics.WAREHOUSE_INVENTORY, bootstrapServers);
 

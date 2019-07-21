@@ -105,6 +105,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class SessionWindowsExample {
 
+
   static final String PLAY_EVENTS = "play-events";
   static final Long INACTIVITY_GAP = TimeUnit.MINUTES.toMillis(30);
   static final String PLAY_EVENTS_PER_SESSION = "play-events-per-session";

@@ -59,10 +59,12 @@ public class EmailService implements Service {
     //Create the streams/tables for the join
     final KStream<String, Order> orders = builder.stream(ORDERS.name(),
         Consumed.with(ORDERS.keySerde(), ORDERS.valueSerde()));
+
     final KStream<String, Payment> payments = builder.stream(PAYMENTS.name(),
         Consumed.with(PAYMENTS.keySerde(), PAYMENTS.valueSerde()))
         //Rekey payments to be by OrderId for the windowed join
         .selectKey((s, payment) -> payment.getOrderId());
+
     final GlobalKTable<Long, Customer> customers = builder.globalTable(CUSTOMERS.name(),
         Consumed.with(CUSTOMERS.keySerde(), CUSTOMERS.valueSerde()));
 

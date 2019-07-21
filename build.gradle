@@ -1,3 +1,4 @@
+import com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask
 
 plugins {
 	id 'java'
@@ -69,7 +70,7 @@ task copyTask (type: Copy) {
     into 'src/main/java'
 }
 
-task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {
+task generateAvro(type: GenerateAvroJavaTask) {
     source("src/main/resources/avro")
     outputDir = file("dest/java")
 }

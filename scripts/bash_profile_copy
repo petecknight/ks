@@ -1,8 +1,8 @@
-\source <(kubectl completion bash)
 
-if [ -f /usr/local/share/bash-completion/bash_completion ]; then
-    . /usr/local/share/bash-completion/bash_completion
-fi
+source <(kubectl completion bash)
+source <(kops completion bash)
+export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
+source "/usr/local/etc/profile.d/bash_completion.sh"
 
 alias login="/Users/pkn04/.osprey/osprey user login"
 
