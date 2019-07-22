@@ -1,4 +1,4 @@
-**PageViewRegionExample**
+**SumLambdaExample**
 
 Go to root of project and bring up Kafka by running docker-compose up:
 
@@ -9,14 +9,13 @@ Go to root of project and bring up Kafka by running docker-compose up:
 
 Execute script to add the required topics
 
-`PageViewRegionExample.sh`
+`SumLambdaExample.sh`
 
-
-write some data to the input topic using the PageViewRegionExampleDriver
+write some data to the input topic using the SumLambdaExampleDriver
 
 And to consume messages from the output topic:
 
-`docker-compose exec broker bash -c 'kafka-console-consumer --topic PageViewsByRegion  
+`docker-compose exec broker bash -c 'kafka-console-consumer --topic sum-of-odd-numbers-topic  
 --from-beginning --bootstrap-server localhost:9092'`
 
 
