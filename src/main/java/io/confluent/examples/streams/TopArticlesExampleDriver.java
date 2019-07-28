@@ -61,15 +61,14 @@ import java.util.stream.IntStream;
 public class TopArticlesExampleDriver {
 
   public static void main(final String[] args) throws IOException {
-    final String bootstrapServers = args.length > 0 ? args[0] : "localhost:9092";
+    final String bootstrapServers = args.length > 0 ? args[0] : "localhost:29092";
     final String schemaRegistryUrl = args.length > 1 ? args[1] : "http://localhost:8081";
     produceInputs(bootstrapServers, schemaRegistryUrl);
     consumeOutput(bootstrapServers, schemaRegistryUrl);
   }
 
   private static void produceInputs(final String bootstrapServers, final String schemaRegistryUrl) throws IOException {
-    final String[] users = {"erica", "bob", "joe", "damian", "tania", "phil", "sam",
-        "lauren", "joseph"};
+    final String[] users = {"erica", "bob", "joe", "damian", "tania", "phil", "sam", "lauren", "joseph"};
     final String[] industries = {"engineering", "telco", "finance", "health", "science"};
     final String[] pages = {"index.html", "news.html", "contact.html", "about.html", "stuff.html"};
 
