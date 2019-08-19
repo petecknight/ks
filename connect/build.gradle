@@ -1,0 +1,18 @@
+apply plugin: "java"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+    drivers
+}
+
+dependencies {
+    drivers "com.couchbase.client:kafka-connect-couchbase:${couchbaseKafkaConnectorVersion}"
+    drivers "oracle:ojdbc6:11.2.0.4"
+}
+
+task copyDrivers(type: Copy) {
+    from configurations.drivers
+    into "$buildDir/drivers-download"
+}

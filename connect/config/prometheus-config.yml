@@ -1,0 +1,9 @@
+whitelistObjectNames: ["kafka.connect:*", "kafka.consumer:*", "kafka.producer:*"]
+lowercaseOutputName: false
+lowercaseOutputLabelNames: false
+rules:
+- pattern: 'status: running'
+  value: 1
+- pattern: 'status: *'
+  value: 0
+- pattern: ".*"

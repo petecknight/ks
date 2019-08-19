@@ -1,0 +1,23 @@
+{
+  "connector.class": "com.couchbase.connect.kafka.CouchbaseSinkConnector",
+  "tasks.max":1,
+  "key.converter":"org.apache.kafka.connect.storage.StringConverter",
+  "value.converter":"org.apache.kafka.connect.json.JsonConverter",
+  "couchbase.durability.replicate_to":"NONE",
+  "couchbase.durability.persist_to":"NONE",
+  "value.converter.schemas.enable":"false",
+  "connection.timeout.ms":"2000",
+  "consumer.group.id":"_consumer_",
+  "client.id":"_consumer_",
+  "consumer.client.id":"_consumer_",
+  "topics":"_topic_",
+  "connection.bucket":"_bucket_",
+  "connection.username":"_username_",
+  "connection.password":"_password_",
+  "connection.cluster_address":"_connection_",
+  "errors.retry.timeout": "-1",
+  "errors.retry.delay.max.ms": "30000",
+  "errors.log.enable": "true",
+  "errors.log.include.messages": "false",
+  "errors.tolerance": "all"
+}
