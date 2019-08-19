@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  couchbase:
+    build:
+      context: ./kafka-connect-couchbase-mock
+      dockerfile: Dockerfile
+    hostname: couchbase
+    container_name: couchbase
+    ports:
+    - "8091-8096:8091-8096"
+    - "11210-11211:11210-11211"
+
+  kafka-connect:
+    build:
+      context: ./kafka-connect
+      dockerfile: Dockerfile
+    hostname: kafka-connect
+    container_name: kafka-connect
+    depends_on:
+    - zookeeper
+    - broker
+    - couchbase
+    ports:
+    - "8083:8083"
