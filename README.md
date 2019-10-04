@@ -11,7 +11,7 @@ If changes have been made to the schema, regenerate Avro
 
 See each individual class named md file explaining how to run.
 
-### Renewals Topology VM params
+### Topology VM params
 
 ``` -Djava.util.logging.config.file=./prometheus-config/prometheus-logging.properties
   -Dcom.sun.management.jmxremote
