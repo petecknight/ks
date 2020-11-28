@@ -10,7 +10,7 @@
   "connection.username": "_username_",
   "connection.password": "_password_",
   "use_snapshots": "false",
-  "event.filter.class": "uk.sky.csp.connect.kafka.filter.TitleOffersFilter",
+  "event.filter.class": "xxx.XXXFilter",
   "couchbase.stream_from": "SAVED_OFFSET_OR_BEGINNING",
   "couchbase.compression": "ENABLED",
   "couchbase.flow_control_buffer": "128m",
